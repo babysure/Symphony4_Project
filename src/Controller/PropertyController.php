@@ -48,7 +48,7 @@ class PropertyController extends AbstractController {
       #$property  = $this -> repository -> findAllVisible() ;
 
       $property  = $this -> repository -> findOneBy( ['floor' => 4 ]) ;
-      $property[0] -> setSold(false) ;
+      #$property[0] -> setSold(false) ;
       $this -> em -> flush() ;
       dump($property) ;
       #dump($property) ;
@@ -68,6 +68,8 @@ class PropertyController extends AbstractController {
   */
   public function show( Property  $property , string $slug ) : Response
   {
+    # redirection en cas de mauvais Url
+
 
     if ( $property-> getSlug() !== $slug ){
 
