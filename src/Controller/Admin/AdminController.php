@@ -60,7 +60,7 @@ class AdminController extends AbstractController
 
   public function index(){
 
-    $properties =   $this -> repository -> findAll() ;
+    $properties =   $this -> repository -> findAll() ; //rechercher tous les biens
 
     return $this -> render('admin/index.html.twig' , compact('properties') ) ;
 
@@ -130,9 +130,9 @@ class AdminController extends AbstractController
 
       $this -> em -> flush() ;
 
-      $this -> addFlash('success',  $property -> getTitle().' a été modifié avec succès') ;
+      $this -> addFlash('success',  $property -> getTitle().' a été modifié avec succès') ; //$this -> addFlash('id',msg)
 
-      return $this -> redirectToRoute('admin.index');
+      return $this -> redirectToRoute('admin.index'); // on se redirige vers la route admin.index
 
     }
 
@@ -140,9 +140,6 @@ class AdminController extends AbstractController
     return $this -> render('admin/edit.html.twig'  ,
     [ 'property' =>  $property , 'form' => $form -> createView()  ]) ;
   }
-
-
-
 
   /**
   * @Route("/admin/delete/{id}", name="admin.delete" , methods="DELETE" )
@@ -156,19 +153,16 @@ class AdminController extends AbstractController
 
       $name_property = $property -> getTitle() ;
 
-      $this -> em -> remove($property) ;
+      $this -> em -> remove($property) ; // demande de supression
 
-      $this -> em -> flush() ;
+      $this -> em -> flush() ; //envoit requête en base de donné
 
-      $this -> addFlash('success', $name_property .' a été supprimé avec succès') ;
+      $this -> addFlash('success', $name_property .' a été supprimé avec succès') ;  //$this -> addFlash('id',msg)
 
-      return $this -> redirectToRoute('admin.index', ['nameProperty' => $name_property ]);
+      return $this -> redirectToRoute('admin.index', ['nameProperty' => $name_property ]); // on se redirige vers la route admin.index
 
     }
-
-
   }
-
 
 }
 
