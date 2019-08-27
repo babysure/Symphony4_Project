@@ -3,18 +3,63 @@
 {% block title 'voir nos biens'   %}
 
 {% block body %}
-  <div class = 'card ' >
-    <div class = 'card - title' >  Voici mon titre
-      <div class = 'container mt-5 center ' >
-      <h1> voir nos biens <h1>
+
+  <div class="jumbotron">
+
+    <div class="container">
+
+      {{ form_start(form) }}
+
+      <div class="form-row align-items-end">
+
+       <div class="col">
+
+         {{ form_row(form.maxPrice) }}
+
+       </div>
+
+       <div class="col">
+
+         {{ form_row(form.minSurface) }}
+
+       </div>
+
+      <div class="col">
+
+        <div class="form-group">
+
+            <button class='btn btn-primary ' >Rechercher</button>
+
+        </div>
+
+      </div>
+      </div>
+
+      {{ form_end(form) }}
+
     </div>
+
   </div>
 
-  <p> Bonjour tous le monde voici mon deuxième paragraphe de mon site en symfony ;)
+  <div class = 'container mt-4 ' >
+      <h1> voir nos biens <h1>
 
-      Bientôt ici il y aura des annonces ('-')
-  </p>
+        <div class="row">
 
+          {%  for property in properties %}
+
+            <div class="col-md-4 ">
+
+                {% include 'property/_property.html.twig' %}
+
+            </div>
+          {% endfor %}
+
+        </div>
+
+        <div class="pagination">
+          {{ knp_pagination_render(properties) }}
+        </div>
 
 
   </div>

@@ -17,6 +17,15 @@ use Doctrine\Common\Persistence\ObjectManager ;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController ;
 use Symfony\Component\Routing\Annotation\Route;
 
+use  Knp\Component\Pager\PaginatorInterface ;
+
+use Symfony\Component\HttpFoundation\Request;
+
+
+use App\Entity\FilterProperty ;
+
+use App\Form\FilterPropertyType ;
+
 class PropertyController extends AbstractController {
 
 
@@ -41,19 +50,33 @@ class PropertyController extends AbstractController {
        *  @return Response
     */
 
-  public function index(): Response
+  public function index( PaginatorInterface $paginator ,  Request $request  ): Response
   {
 
+      $search = new FilterProperty() ;
 
-      #$property  = $this -> repository -> findAllVisible() ;
+      $form = $this -> createForm(FilterPropertyType::class , $search);
+      $form -> handleRequest($request) ;
 
-      $property  = $this -> repository -> findOneBy( ['floor' => 4 ]) ;
-      #$property[0] -> setSold(false) ;
-      $this -> em -> flush() ;
-      dump($property) ;
+      $query  = $this -> repository -> findAllVisibleQuery( $search ) ;
+
+      $properties = $paginator->paginate(
+       $query, /* query NOT result */
+       $request->query->getInt('page', 1), /*page number*/
+        12  /*limit per page*/) ;
+
+      #$property  = $this -> repository -> findOneBy( ['floor' => 4 ]) ;
+
+      #$this -> em -> flush() ;
       #dump($property) ;
 
-    return $this -> render('property/index.html.twig' ,  [ 'current_menu' => 'properties']) ;
+
+    return $this -> render('property/index.html.twig' ,
+    [ 'current_menu' => 'properties' ,
+    'properties' => $properties ,
+    'form' => $form-> createView()
+
+    ]);
 
 
 
@@ -89,6 +112,7 @@ class PropertyController extends AbstractController {
     ] );
 
   }
+
 
 
 }

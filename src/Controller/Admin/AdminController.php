@@ -16,6 +16,8 @@ use App\Entity\Property ;
 
 use App\Form\PropertyType ;
 
+use  Knp\Component\Pager\PaginatorInterface ;
+
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -58,11 +60,22 @@ class AdminController extends AbstractController
       *  @return Response
   */
 
-  public function index(){
+  public function index(PaginatorInterface $paginator ,  Request $request): Response {
 
-    $properties =   $this -> repository -> findAll() ; //rechercher tous les biens
 
-    return $this -> render('admin/index.html.twig' , compact('properties') ) ;
+    $query  = $this -> repository -> findAllVisibleQuery() ;
+
+
+
+    //$properties =   $this -> repository -> findAll() ; //rechercher tous les biens
+
+    $properties = $paginator->paginate(
+     $query, /* query NOT result */
+     $request->query->getInt('page', 1), /*page number*/
+      12  /*limit per page*/) ;
+
+    return $this -> render('admin/index.html.twig' , /*compact('properties') */
+        [ 'properties' => $properties]);
 
   }
 

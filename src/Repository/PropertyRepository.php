@@ -5,7 +5,9 @@ namespace App\Repository;
 use App\Entity\Property;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Doctrine\ORM\QueryBuilder ; 
+use Doctrine\ORM\QueryBuilder ;
+use Doctrine\ORM\Query ;
+use App\Entity\FilterProperty ;
 
 
 /**
@@ -22,21 +24,47 @@ class PropertyRepository extends ServiceEntityRepository
     }
 
 
-
-
-
-
     /**
-    * @return Property
+    * Si on renseigne aucun paramètre cela veut dire que l'on veut juste voir les bien sinon
+    * la méthode filtre les bien en fonction des contrainte de l'objet FilterProperty passé en paramètre
+    *
+    * @param FilterProperty
+    * @return Query
     */
-    public function findAllVisible() : array
+    public function findAllVisibleQuery( FilterProperty $search = NULL ) : Query
     {
 
-      return $this-> findVisibleQuery()
-          -> getQuery()
-          ->getResult()
-      ;
+      $query = $this-> findVisibleQuery() ;
+
+
+
+      if( False == is_null($search) ){
+
+
+        if(   $search -> getMaxPrice()  ) {
+
+          $query = $query -> andWhere('p.price <='.  $search -> getMaxPrice() ) ;
+
+        }
+
+
+
+        if ( $search -> getMinSurface()  ){
+
+          $query = $query -> andWhere('p.surface >='. $search  -> getMinSurface() );
+
+
+        }
+
+
+      }
+
+
+       return  $query -> getQuery() ;
+
+
     }
+
 
     /**
     * @return Property
@@ -50,9 +78,6 @@ class PropertyRepository extends ServiceEntityRepository
           ->getResult()
       ;
     }
-
-
-
 
 
     private function findVisibleQuery() : QueryBuilder

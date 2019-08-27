@@ -51,7 +51,22 @@
 
       </tbody>
     </table>
-    <a href = '{{ path('admin.new') }} ' class = 'btn btn-primary' > Créer</a>
+
+    <div class="container">
+
+      <div class="pagination">
+        {{ knp_pagination_render(properties) }}
+      </div>
+
+
+      <a href = '{{ path('admin.new') }}' class = 'btn btn-primary' > Créer</a>
+
+    </div>
+
+
+
+
+
 
 
   </div>
