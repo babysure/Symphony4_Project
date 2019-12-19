@@ -3,6 +3,7 @@
 namespace App\Entity ;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
@@ -24,6 +25,21 @@ private $maxPrice ;
 * @Assert\Positive
 */
 private $minSurface ;
+
+
+
+/**
+*  @var ArrayCollection
+*/
+private $newOption ;
+
+
+public function __construct(){
+
+  $this -> option = new  ArrayCollection() ;
+
+
+}
 
 
 
@@ -72,4 +88,32 @@ public function getMinSurface() : ?int  {
   return $this -> minSurface ;
   }
 }
+
+
+/**
+* @return ArrayCollection|null
+*/
+
+public function getNewOption() :  ?ArrayCollection {
+
+
+  return $this -> option ;
+
+}
+
+
+/**
+* @param ArrayCollection | null
+* @return FilterProperty
+*/
+public function setNewOption( ?ArrayCollection $newOption ) : FilterProperty {
+
+  $this -> newOption = $newOption ;
+
+  return $this ;
+
+}
+
+
+
 ?>

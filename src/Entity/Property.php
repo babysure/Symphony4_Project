@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -100,9 +102,17 @@ class Property
      */
     private $createdAt;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\NewOption", inversedBy="properties")
+     */
+    private $newOptions;
+
+
+
     public function __construct() {
 
       $this-> createdAt = new  \DateTime() ;
+      $this->newOptions = new ArrayCollection();
 
 
     }
@@ -236,9 +246,6 @@ class Property
 
     }
 
-
-
-
     public function getCity(): ?string
     {
         return $this->city;
@@ -298,4 +305,32 @@ class Property
 
         return $this;
     }
-}
+
+    /**
+     * @return Collection|NewOption[]
+     */
+    public function getNewOptions(): Collection
+    {
+        return $this->newOptions;
+    }
+
+    public function addNewOption(NewOption $newOption): self
+    {
+        if (!$this->newOptions->contains($newOption)) {
+            $this->newOptions[] = $newOption;
+            $newOption->addProperty($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNewOption(NewOption $newOption): self
+    {
+        if ($this->newOptions->contains($newOption)) {
+            $this->newOptions->removeElement($newOption);
+            $newOption->removeProperty($this);
+        }
+
+        return $this;
+    }
+  }

@@ -3,9 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Property;
+use App\Entity\NewOption ;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -32,6 +35,13 @@ class PropertyType extends AbstractType
             ->add('address')
             ->add('postalCode')
             ->add('sold'  , CheckboxType::class ,  [ 'required' => false ])
+
+            ->add('newOptions' , EntityType::class  , [
+              'class' => NewOption::class ,
+              'choice_label' => 'name' ,
+              'multiple' => true
+
+            ])
 
 
         ;

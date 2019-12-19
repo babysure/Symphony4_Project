@@ -20,6 +20,8 @@ use  Knp\Component\Pager\PaginatorInterface ;
 
 use Symfony\Component\HttpFoundation\Request;
 
+use App\Entity\NewOption ;
+
 
 /**
  *
@@ -74,7 +76,7 @@ class AdminController extends AbstractController
      $request->query->getInt('page', 1), /*page number*/
       12  /*limit per page*/) ;
 
-    return $this -> render('admin/index.html.twig' , /*compact('properties') */
+    return $this -> render('admin/property/index.html.twig' , /*compact('properties') */
         [ 'properties' => $properties]);
 
   }
@@ -109,7 +111,7 @@ class AdminController extends AbstractController
 
     }
 
-    return $this -> render('admin/new.html.twig' , [
+    return $this -> render('admin/property/new.html.twig' , [
       'property' => $property ,
       'form' => $form -> createView()
     ]);
@@ -127,7 +129,6 @@ class AdminController extends AbstractController
 
   public function edit(Property $property , Request $request ) : Response
   {
-
 
     $form  = $this -> createForm( PropertyType::class , $property ) ;
 
@@ -150,7 +151,7 @@ class AdminController extends AbstractController
     }
 
 
-    return $this -> render('admin/edit.html.twig'  ,
+    return $this -> render('admin/property/edit.html.twig'  ,
     [ 'property' =>  $property , 'form' => $form -> createView()  ]) ;
   }
 

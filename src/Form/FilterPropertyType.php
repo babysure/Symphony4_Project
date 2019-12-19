@@ -36,6 +36,22 @@ class FilterPropertyType extends AbstractType
               ]
 
             ])
+
+
+
+
+
+
+            ->add('options' , EntityType::class  , [
+
+              'required' => false ,
+              'label' => false ,
+              'class' => NewOption::class
+              'choice_label' => 'name'
+              'multiple' => true 
+
+
+            ])
         ;
     }
 
