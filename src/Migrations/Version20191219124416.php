@@ -38,7 +38,7 @@ final class Version20191219124416 extends AbstractMigration
 
   public function down(Schema $schema) : void
   {
-      // this down() migration is auto-generated, please modify it to your needs
+      // this down() migration is auto-generated, please modify it to your needs 
       $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
       $this->addSql('ALTER TABLE new_option_proerty DROP FOREIGN KEY FK_AB856DAA7C41D6F');
