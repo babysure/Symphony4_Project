@@ -6,6 +6,10 @@ use App\Entity\FilterProperty;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
+use App\Entity\NewOption ;
+
 
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
@@ -42,13 +46,13 @@ class FilterPropertyType extends AbstractType
 
 
 
-            ->add('options' , EntityType::class  , [
+            ->add('newOption' , EntityType::class  , [
 
               'required' => false ,
               'label' => false ,
-              'class' => NewOption::class
-              'choice_label' => 'name'
-              'multiple' => true 
+              'class' => NewOption::class ,
+              'choice_label' => 'name' ,
+              'multiple' => true
 
 
             ])

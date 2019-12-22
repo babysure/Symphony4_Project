@@ -36,7 +36,7 @@ private $newOption ;
 
 public function __construct(){
 
-  $this -> option = new  ArrayCollection() ;
+  $this -> newOption = new  ArrayCollection() ;
 
 
 }
@@ -87,17 +87,17 @@ public function getMinSurface() : ?int  {
 
   return $this -> minSurface ;
   }
-}
+
 
 
 /**
-* @return ArrayCollection|null
+* @return ArrayCollection
 */
 
-public function getNewOption() :  ?ArrayCollection {
+public function getNewOption() : ArrayCollection {
 
 
-  return $this -> option ;
+  return $this -> newOption ;
 
 }
 
@@ -112,6 +112,7 @@ public function setNewOption( ?ArrayCollection $newOption ) : FilterProperty {
 
   return $this ;
 
+}
 }
 
 
